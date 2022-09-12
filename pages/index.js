@@ -1,9 +1,15 @@
+import { async } from "@firebase/util";
 import Head from "next/head";
 import Image from "next/image";
 import Feed from "../components/Feed";
-import Sidebar from "../components/Sidebar";
 
-export default function Home() {
+import { getProviders, getSession, useSession } from "next-auth/react";
+import Sidebar from "../components/Sidebar";
+import Login from "../components/Login";
+
+export default function Home({ trendingResults, followResults, providers }) {
+  const { data: session } = useSession();
+  if (!session) return <Login providers={providers} />;
   return (
     <div className="">
       <Head>
@@ -19,9 +25,30 @@ export default function Home() {
         <Sidebar />
         {/* Feed */}
         <Feed />
+
         {/* Badgets */}
         {/* Modal */}
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const trendingResults = await fetch(
+    "https://jsonplaceholder.typicode.com/posts"
+  ).then((res) => res.json());
+  const followResults = await fetch(
+    "https://jsonplaceholder.typicode.com/posts"
+  ).then((res) => res.json());
+  const providers = await getProviders();
+  const session = await getSession(context);
+
+  return {
+    props: {
+      trendingResults,
+      followResults,
+      providers,
+      session,
+    },
+  };
 }

@@ -5,6 +5,8 @@ import data from '@emoji-mart/data'
 import { Picker } from 'emoji-mart'
 import { async } from 'emoji-mart'
 import { db, storage } from "../firebase";
+import {useSession } from 'next-auth/react';
+
 import { 
   addDoc,
   collection,
@@ -15,6 +17,8 @@ import {
 import { getDownloadURL, ref, uploadString } from "@firebase/storage";
 
 const Input = () => {
+  const { data: session } = useSession();
+
   const [input, setInput] = useState('')
   const [selectedFile, setSelectedFile] = useState(null)
   const filePickerRef = useRef(null)
@@ -26,10 +30,10 @@ const Input = () => {
     setLoading(true)
 
     const docRef = await addDoc(collection(db, "posts") ,{
-      // id: session.user.uid,
-      // username : session.user.name,
-      // userImage : session.user.image,
-      // tag : session.user.tag,
+      id: session.user.uid,
+      username : session.user.name,
+      userImage : session.user.image,
+      tag : session.user.tag,
       text : input,
       timestamp : serverTimestamp(),
     });
@@ -69,8 +73,9 @@ const Input = () => {
   };
 
   return (
+
     <div className={`flex border-b border-gray-700 p-3 space-x-3 overflow-y-scroll ${loading && "opacity-60"}`}>
-      <img src="unnamed.png" alt="User" className='h-11 w-11 rounded-full cursor-pointer' />
+      <img src={`${session.user.image}`} alt="User" className='h-11 w-11 rounded-full cursor-pointer' />
       <div className='w-full divide-y divide-gray-700'> 
         <div className={`${selectedFile && 'pb-7'} ${input && 'space-y-2.5'}`}>
           <textarea value={input} onChange={(e) => setInput(e.target.value)}  rows="2" 
