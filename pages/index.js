@@ -9,6 +9,7 @@ import Login from "../components/Login";
 import Modal from "../components/Modal";
 import { useRecoilSnapshot, useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
+import Widgets from "../components/Widgets";
 
 export default function Home({ trendingResults, followResults, providers }) {
   const { data: session } = useSession();
@@ -29,6 +30,7 @@ export default function Home({ trendingResults, followResults, providers }) {
         <Sidebar />
         {/* Feed */}
         <Feed />
+        <Widgets trendingResults={trendingResults} followResults={followResults} />
 
         {/* Badgets */}
         {isOpen && <Modal />}
