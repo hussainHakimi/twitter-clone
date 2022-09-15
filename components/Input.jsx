@@ -6,6 +6,9 @@ import { Picker } from 'emoji-mart'
 import { async } from 'emoji-mart'
 import { db, storage } from "../firebase";
 import {useSession } from 'next-auth/react';
+import { init } from 'emoji-mart'
+
+init({ data })
 
 import { 
   addDoc,
@@ -110,21 +113,22 @@ const Input = () => {
               <div className="icon">
                 <CalendarIcon className="text-[#1d9bf0] h-[22px]" />
               </div>
-              {showEmojis && (
-                // <Picker data={data}
-                //   // onSelect={addEmoji}
-                //   style={{
-                //     position: "absolute",
-                //     marginTop: "465px",
-                //     marginLeft: -40,
-                //     maxWidth: "320px",
-                //     borderRadius: "20px",
-                //   }}
-                //   theme="dark"
-                // />                
-                  // new Picker({ data })
-                  <h1> Emojis is not handled</h1>
-              )}
+              
+                {showEmojis && (
+                  // <Picker
+                  //   // onSelect={addEmoji}
+                  //   style={{
+                  //     position: "absolute",
+                  //     marginTop: "465px",
+                  //     marginLeft: -40,
+                  //     maxWidth: "320px",
+                  //     borderRadius: "20px",
+                  //   }}
+                  //   theme="dark"
+                  // />
+                  <h1>Emoji is not handled</h1>
+                )}                
+              
             </div>
             <button className='bg-[#1d9bf0] py-1.5 px-4 rounded-full text-white font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default'
               disabled={!input.trim() && !selectedFile}

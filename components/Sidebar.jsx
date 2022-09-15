@@ -37,7 +37,7 @@ const Sidebar = () => {
         onClick={signOut}
       >
     {/* <Image src={`${session.user.image}`} width={40} height={40} className='rounded-full xl:mr-2.5  ' alt=''/> */}
-    <img src={`${session.user.image}`} alt="userImage" className='h-10 w-10 rounded-full xl:mr-2.5' />
+    <img src={session.user.image} alt="userImage" className='h-10 w-10 rounded-full xl:mr-2.5' />
         <div className=' hidden xl:inline leading-5'>
           <h4 className='font-bold'>{session.user.name}</h4>
           <span className='text-[#6e767d] font-bold'>@{session.user.tag}</span>
